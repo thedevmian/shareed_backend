@@ -33,7 +33,7 @@ const session = statelessSessions({
 export default withAuth(
   config({
     server: {
-      cors: { origin: [process.env.FRONTEND_URL!], credentials: true },
+      cors: { origin: [process.env.FRONTEND_URL!, "http://localhost:7777"], credentials: true },
       port: parseInt(process.env.PORT!) || 3000,
       maxFileSize: 200 * 1024 * 1024,
       healthCheck: true,
