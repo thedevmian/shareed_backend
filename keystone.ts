@@ -33,7 +33,7 @@ export default withAuth(
   config({
     server: {
       cors: { origin: [process.env.FRONTEND_URL!], credentials: true },
-      port: 3000,
+      port: parseInt(process.env.PORT!) || 3000,
       maxFileSize: 200 * 1024 * 1024,
       healthCheck: true,
     },
