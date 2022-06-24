@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { config } from '@keystone-6/core';
 import { createAuth } from '@keystone-6/auth';
 import { statelessSessions } from '@keystone-6/core/session';
+import type { GraphQLConfig } from '@keystone-6/core/types';
 
 import ProductImage from './schemas/ProductImage';
 import Product from './schemas/Product';
@@ -49,6 +50,11 @@ export default withAuth(
       isAccessAllowed: async (context) => (!!context.session?.data?.role?.isAdmin),
       publicPages: ['/signin', '/no-access'],
     },
+    graphql: {
+      playground: true,
+      apolloConfig: {
+        introspection: true,
+    }},
     lists: {
       Product,
       ProductImage,
