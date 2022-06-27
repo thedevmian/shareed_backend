@@ -36,10 +36,9 @@ export default withAuth(
   config({
     server: {
       cors: {
-        origin: "*",
+        origin: whiteList,
         methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-        exposedHeaders: "X-Keystone-Session",
+        allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
         optionsSuccessStatus: 204,
       },
       port: parseInt(process.env.PORT!) || 3000,
