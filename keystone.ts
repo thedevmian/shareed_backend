@@ -1,23 +1,23 @@
-import 'dotenv/config';
-import { config } from '@keystone-6/core';
-import { createAuth } from '@keystone-6/auth';
-import { statelessSessions } from '@keystone-6/core/session';
-import type { GraphQLConfig } from '@keystone-6/core/types';
+import "dotenv/config";
+import { config } from "@keystone-6/core";
+import { createAuth } from "@keystone-6/auth";
+import { statelessSessions } from "@keystone-6/core/session";
+import type { GraphQLConfig } from "@keystone-6/core/types";
 
-import ProductImage from './schemas/ProductImage';
-import Product from './schemas/Product';
-import User from './schemas/User';
-import Order from './schemas/Order';
-import OrderItem from './schemas/OrderItem';
-import Cart from './schemas/Cart';
-import Role from './schemas/Role';
-import sendPasswordResetEmail from './lib/mail';
+import ProductImage from "./schemas/ProductImage";
+import Product from "./schemas/Product";
+import User from "./schemas/User";
+import Order from "./schemas/Order";
+import OrderItem from "./schemas/OrderItem";
+import Cart from "./schemas/Cart";
+import Role from "./schemas/Role";
+import sendPasswordResetEmail from "./lib/mail";
 
 const { withAuth } = createAuth({
-  listKey: 'User',
-  identityField: 'email',
-  secretField: 'password',
-  sessionData: 'id name email role { isAdmin }',
+  listKey: "User",
+  identityField: "email",
+  secretField: "password",
+  sessionData: "id name email role { isAdmin }",
   passwordResetLink: {
     sendToken: async ({ identity, token }) => {
       await sendPasswordResetEmail(identity, token);
@@ -30,13 +30,17 @@ const session = statelessSessions({
   maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
 });
 
-const whiteList = [ 'http://localhost:7777', 'https://sharred.vercel.app/' ];
+const whiteList = ["http://localhost:7777", "https://sharred.vercel.app/"];
 
 export default withAuth(
   config({
     server: {
-      cors: { origin: whiteList, 
-        preflightContinue: false,
+      cors: {
+        origin: "*",
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        exposedHeaders: "X-Keystone-Session",
         optionsSuccessStatus: 204,
       },
       port: parseInt(process.env.PORT!) || 3000,
@@ -44,22 +48,23 @@ export default withAuth(
       healthCheck: true,
     },
     db: {
-      provider: 'postgresql',
-      url: process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/postgres',
+      provider: "postgresql",
+      url: process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/postgres",
       onConnect: async () => {
-        console.log('Connected to db');
+        console.log("Connected to db");
       },
       useMigrations: false,
     },
     ui: {
-      isAccessAllowed: async (context) => (!!context.session?.data?.role?.isAdmin),
-      publicPages: ['/signin', '/no-access'],
+      isAccessAllowed: async (context) => !!context.session?.data?.role?.isAdmin,
+      publicPages: ["/signin", "/no-access"],
     },
     graphql: {
       playground: true,
       apolloConfig: {
         introspection: true,
-    }},
+      },
+    },
     lists: {
       Product,
       ProductImage,
@@ -70,5 +75,5 @@ export default withAuth(
       Role,
     },
     session,
-  }),
+  })
 );
