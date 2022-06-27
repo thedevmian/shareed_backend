@@ -62,6 +62,12 @@ export default withAuth(
       apolloConfig: {
         introspection: true,
       },
+      cors: {
+        origin: whiteList,
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
+        optionsSuccessStatus: 204,
+      },
     },
     lists: {
       Product,
