@@ -35,12 +35,6 @@ const whiteList = ["http://localhost:7777", "https://sharred.vercel.app/"];
 export default withAuth(
   config({
     server: {
-      cors: {
-        origin: whiteList,
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
-        optionsSuccessStatus: 204,
-      },
       port: parseInt(process.env.PORT!) || 3000,
       maxFileSize: 200 * 1024 * 1024,
       healthCheck: true,
@@ -61,12 +55,6 @@ export default withAuth(
       playground: true,
       apolloConfig: {
         introspection: true,
-      },
-      cors: {
-        origin: whiteList,
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
-        optionsSuccessStatus: 204,
       },
     },
     lists: {
