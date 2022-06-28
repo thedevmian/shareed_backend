@@ -35,6 +35,12 @@ const whiteList = ["http://localhost:7777", "https://sharred.vercel.app/"];
 export default withAuth(
   config({
     server: {
+      cors: {
+        origin: whiteList,
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+        optionsSuccessStatus: 204,
+      },
       port: parseInt(process.env.PORT!) || 3000,
       maxFileSize: 200 * 1024 * 1024,
       healthCheck: true,
