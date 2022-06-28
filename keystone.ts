@@ -30,13 +30,13 @@ const session = statelessSessions({
   maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
 });
 
-const whiteList = ["http://localhost:7777", "https://sharred.vercel.app/"];
+
 
 export default withAuth(
   config({
     server: {
       cors: {
-        origin: whiteList,
+        origin: process.env.FRONTEND_URL,
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         optionsSuccessStatus: 204,
