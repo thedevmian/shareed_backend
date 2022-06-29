@@ -2,7 +2,6 @@ import "dotenv/config";
 import { config } from "@keystone-6/core";
 import { createAuth } from "@keystone-6/auth";
 import { statelessSessions } from "@keystone-6/core/session";
-import type { GraphQLConfig } from "@keystone-6/core/types";
 
 import ProductImage from "./schemas/ProductImage";
 import Product from "./schemas/Product";
@@ -38,7 +37,6 @@ export default withAuth(
       cors: {
         origin: process.env.FRONTEND_URL,
         credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         optionsSuccessStatus: 204,
       },
       port: parseInt(process.env.PORT!) || 3000,
@@ -62,6 +60,12 @@ export default withAuth(
       apolloConfig: {
         introspection: true,
       },
+      cors: {
+        origin: process.env.FRONTEND_URL,
+        credentials: true,
+        optionsSuccessStatus: 204,
+        preflightContinue: false,
+      }
     },
     lists: {
       Product,
