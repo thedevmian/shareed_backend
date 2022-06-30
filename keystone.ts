@@ -37,8 +37,6 @@ export default withAuth(
       cors: {
         origin: process.env.FRONTEND_URL,
         credentials: true,
-        optionsSuccessStatus: 204,
-        allowedHeaders: '*',
       },
       port: parseInt(process.env.PORT!) || 3000,
       maxFileSize: 200 * 1024 * 1024,
