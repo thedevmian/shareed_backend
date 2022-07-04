@@ -4,20 +4,7 @@
   "private": true,
   "author": "Damian",
   "description": "Headless CMS for Shareed with React, Node, KeystoneJS",
-  "eslintConfig": {
-    "extends": [
-      "airbnb",
-      "airbnb-typescript"
-    ],
-    "parserOptions": {
-      "project": "tsconfig.json",
-      "tsconfigRootDir": "../backend",
-      "sourceType": "module"
-    },
-    "rules": {
-      "@typescript-eslint/no-unsafe-assignment": 0
-    }
-  },
+  
   "scripts": {
     "dev": "keystone dev",
     "start": "keystone start",
