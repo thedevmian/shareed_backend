@@ -4,8 +4,7 @@ module.exports = {
     {
       files: ["*.ts", "*.tsx"], // Your TypeScript files extension
       extends: [
-          "eslint:recommended",
-          "plugin:@typescript-eslint/eslint-recommended",
+        "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
       ],
@@ -18,6 +17,5 @@ module.exports = {
   rules: {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
-    
-},
+  },
 };
