@@ -27,9 +27,6 @@ const { withAuth } = createAuth({
 
 const session = statelessSessions({
   secret: process.env.COOKIE_SECRET ?? "",
-  domain: process.env.FRONTEND_URL ?? "localhost",
-  path: "/",
-  sameSite: "none",
   maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
 });
 
