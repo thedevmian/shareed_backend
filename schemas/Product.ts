@@ -3,7 +3,7 @@ import {
   integer, relationship, select, text, timestamp,
 } from '@keystone-6/core/fields';
 
-const Product = list({
+export const Product = list({
   fields: {
     name: text({ validation: { isRequired: true } }),
     description: text({ validation: { isRequired: true }, ui: { displayMode: 'textarea' } }),
@@ -39,4 +39,3 @@ const Product = list({
   },
 });
 
-export default Product;

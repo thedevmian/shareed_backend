@@ -3,7 +3,7 @@ import {
   relationship, text, timestamp, checkbox,
 } from '@keystone-6/core/fields';
 
-const Role = list({
+export const Role = list({
   fields: {
     name: text({ validation: { isRequired: true } }),
     assignedTo: relationship({
@@ -64,4 +64,3 @@ const Role = list({
   },
 });
 
-export default Role;

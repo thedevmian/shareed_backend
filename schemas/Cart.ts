@@ -3,7 +3,7 @@ import {
 } from '@keystone-6/core/fields';
 import { list } from '@keystone-6/core';
 
-const Cart = list({
+export const Cart = list({
   // TODO add access control
   fields: {
     user: relationship({ ref: 'User.cart', many: true }),
@@ -20,4 +20,3 @@ const Cart = list({
   },
 });
 
-export default Cart;

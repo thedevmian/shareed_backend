@@ -1,7 +1,7 @@
 import { list } from '@keystone-6/core';
 import { password, relationship, text } from '@keystone-6/core/fields';
 
-const User = list({
+ export const User = list({
   // TODO: add access control
 
   fields: {
@@ -32,4 +32,4 @@ const User = list({
   },
 });
 
-export default User;
+
