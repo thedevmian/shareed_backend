@@ -4,7 +4,7 @@ export { Cart } from "./Cart";
 export { Order } from "./Order";
 export { OrderItem } from "./OrderItem";
 export { Product } from "./Product";
-export { ProductPhoto } from "./ProductPhoto";
+export { ProductImage } from "./ProductImage";
 
 
 

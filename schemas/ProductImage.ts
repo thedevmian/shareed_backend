@@ -9,7 +9,7 @@ const cloudinary = {
   folder: process.env.CLOUDINARY_API_FOLDER,
 };
 
-export const ProductPhoto = list({
+export const ProductImage = list({
   // TODO: add access control
   fields: {
     image: cloudinaryImage({
