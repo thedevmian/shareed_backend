@@ -3,8 +3,17 @@ import { config } from "@keystone-6/core";
 import { BaseKeystoneTypeInfo, KeystoneContext } from "@keystone-6/core/types";
 import { createAuth } from "@keystone-6/auth";
 import { statelessSessions } from "@keystone-6/core/session";
+
 import sendPasswordResetEmail from "./lib/mail";
-import { Cart, Order, OrderItem, Product, ProductImage, User, Role } from "./schemas";
+import {
+  Cart,
+  Order,
+  OrderItem,
+  Product,
+  ProductImage,
+  User,
+  Role,
+} from "./schemas";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -21,6 +30,8 @@ const { withAuth } = createAuth({
 const session = statelessSessions({
   secret: process.env.COOKIE_SECRET ?? "",
   maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+  sameSite: "none",
+  secure: false,
 });
 
 export default withAuth(
@@ -38,7 +49,9 @@ export default withAuth(
     },
     db: {
       provider: "postgresql",
-      url: process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5432/postgres",
+      url:
+        process.env.DATABASE_URL ||
+        "postgres://postgres:postgres@localhost:5432/postgres",
       onConnect: (db: KeystoneContext<BaseKeystoneTypeInfo>): Promise<void> => {
         const onDbConnectInfo = (): Promise<void> => {
           console.log(`Connected to database:`, db);
@@ -49,8 +62,8 @@ export default withAuth(
       useMigrations: false,
     },
     ui: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       isAccessAllowed: (context: KeystoneContext<BaseKeystoneTypeInfo>) =>
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         !!context.session?.data?.role?.isAdmin,
       publicPages: ["/signin", "/no-access"],
     },
