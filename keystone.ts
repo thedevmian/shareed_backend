@@ -38,9 +38,8 @@ export default withAuth(
   config({
     server: {
       cors: {
-        origin: "*",
+        origin: true,
         credentials: true,
-        allowedHeaders: "*",
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
       },
       port: parseInt(process.env.PORT!) || 3000,
