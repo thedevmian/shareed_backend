@@ -2,7 +2,8 @@
 # Modify your Keystone config when you want to change this.
 
 type Mutation {
-  addProductToBag(productId: ID): Cart
+  checkCart(id: ID!): Cart
+  addProductToBag(productId: ID!): [Cart]
   createProduct(data: ProductCreateInput!): Product
   createProducts(data: [ProductCreateInput!]!): [Product]
   updateProduct(
