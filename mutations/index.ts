@@ -8,7 +8,7 @@ export const extendGraphqlSchema = graphQLSchemaExtension<Context>({
   typeDefs: `
        type Mutation {
       checkCart(id: ID!): Cart
-      addProductToBag(productId: ID!): [Cart]
+      addProductToBag(productId: ID!): Cart
     }
     `,
   resolvers: {
@@ -29,17 +29,31 @@ export const extendGraphqlSchema = graphQLSchemaExtension<Context>({
 
         const cartItem = await context.query.Cart.findMany({
           where: {
-            user: { id: context.session.itemId },
-            product: { id: productId },
+            user: {
+              some: {
+                id: {
+                  equals: context.session.itemId,
+                },
+              },
+            },
+            product: {
+              some: {
+                id: {
+                  equals: productId,
+                },
+              },
+            },
           },
-          query: "id quantity",
+          query: "id user { id } product { id } quantity",
         });
 
         const [cartCheck] = cartItem;
         if (cartCheck) {
           return await context.query.Cart.updateOne({
             where: { id: cartCheck.id },
-            data: { quantity: cartCheck.quantity + 1 },
+            data: {
+              quantity: cartCheck.quantity + 1,
+            },
           });
         }
 

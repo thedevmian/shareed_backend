@@ -3,7 +3,7 @@
 
 type Mutation {
   checkCart(id: ID!): Cart
-  addProductToBag(productId: ID!): [Cart]
+  addProductToBag(productId: ID!): Cart
   createProduct(data: ProductCreateInput!): Product
   createProducts(data: [ProductCreateInput!]!): [Product]
   updateProduct(

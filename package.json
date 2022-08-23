@@ -4,13 +4,12 @@
   "private": true,
   "author": "Damian",
   "description": "Headless CMS for Shareed with React, Node, KeystoneJS",
-  
   "scripts": {
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build",
     "seed-data": "keystone --seed-data",
-    "postinstall": "keystone postinstall"
+    "postinstall": "keystone postinstall --fix"
   },
   "dependencies": {
     "@keystone-6/auth": "^1.0.1",
