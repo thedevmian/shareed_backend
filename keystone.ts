@@ -14,6 +14,7 @@ import {
   User,
   Role,
 } from "./schemas";
+import { extendGraphqlSchema } from "./mutations";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -54,6 +55,7 @@ export default withAuth(
       onConnect: (db: KeystoneContext<BaseKeystoneTypeInfo>): Promise<void> => {
         const onDbConnectInfo = (): Promise<void> => {
           console.log(`Connected to database:`, db);
+          console.log("session:", session);
           return Promise.resolve();
         };
         return onDbConnectInfo();
@@ -78,6 +80,7 @@ export default withAuth(
       Cart,
       Role,
     },
+    extendGraphqlSchema: extendGraphqlSchema,
     session,
   })
 );
