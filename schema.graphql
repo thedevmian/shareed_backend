@@ -4,6 +4,7 @@
 type Mutation {
   checkCart(id: ID!): Cart
   addProductToBag(productId: ID!): Cart
+  checkout(token: String!): Order
   createProduct(data: ProductCreateInput!): Product
   createProducts(data: [ProductCreateInput!]!): [Product]
   updateProduct(
@@ -304,7 +305,7 @@ All options are strings as they ultimately end up in a URL.
 """
 input CloudinaryImageFormat {
   """
-   Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  Rewrites the filename to be this pretty string. Do not include `/` or `.`
   """
   prettyName: String
   width: String
@@ -628,6 +629,7 @@ input OrderItemRelateToManyForCreateInput {
 
 type OrderItem {
   id: ID!
+  name: String
   order(
     where: OrderWhereInput! = {}
     orderBy: [OrderOrderByInput!]! = []
@@ -644,7 +646,6 @@ type OrderItem {
   photoCount(where: ProductImageWhereInput! = {}): Int
   quantity: Int
   price: Int
-  name: String
 }
 
 input OrderItemWhereUniqueInput {
@@ -656,26 +657,26 @@ input OrderItemWhereInput {
   OR: [OrderItemWhereInput!]
   NOT: [OrderItemWhereInput!]
   id: IDFilter
+  name: StringFilter
   order: OrderManyRelationFilter
   photo: ProductImageManyRelationFilter
   quantity: IntFilter
   price: IntNullableFilter
-  name: StringFilter
 }
 
 input OrderItemOrderByInput {
   id: OrderDirection
+  name: OrderDirection
   quantity: OrderDirection
   price: OrderDirection
-  name: OrderDirection
 }
 
 input OrderItemUpdateInput {
+  name: String
   order: OrderRelateToManyForUpdateInput
   photo: ProductImageRelateToManyForUpdateInput
   quantity: Int
   price: Int
-  name: String
 }
 
 input OrderItemUpdateArgs {
@@ -684,11 +685,11 @@ input OrderItemUpdateArgs {
 }
 
 input OrderItemCreateInput {
+  name: String
   order: OrderRelateToManyForCreateInput
   photo: ProductImageRelateToManyForCreateInput
   quantity: Int
   price: Int
-  name: String
 }
 
 type Cart {

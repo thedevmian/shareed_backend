@@ -65,11 +65,11 @@ model Order {
 
 model OrderItem {
   id       String         @id @default(cuid())
+  name     String         @default("")
   order    Order[]        @relation("Order_items")
   photo    ProductImage[] @relation("OrderItem_photo")
   quantity Int
   price    Int?
-  name     String         @default("")
 }
 
 model Cart {
