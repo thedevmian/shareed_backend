@@ -39,36 +39,38 @@ const checkout = async (
     }
     `,
   });
+  if (!user) {
+    throw new Error("User not found");
+  }
 
   const cartItems = user.cart.filter((cartItem) => cartItem.product);
-
   if (!cartItems.length) {
     throw new Error("You have no items in your cart");
   }
   const total = cartItems.reduce((acc: number, cartItem) => {
-    return acc + cartItem.product.price * cartItem.quantity;
+    return acc + cartItem.product[0].price * cartItem.quantity;
   }, 0);
 
   const charge = await stripe.paymentIntents
     .create({
       amount: total,
       currency: "usd",
-      receipt_email: user.email,
-      payment_method: token,
+      automatic_payment_methods: {
+        enabled: true,
+      },
     })
     .catch((err) => {
-      console.log(err);
       throw new Error("Error processing payment");
     });
 
   const orderItems = cartItems.map((cartItem) => {
     const orderItem = {
-      name: cartItem.product.name,
-      price: cartItem.product.price,
+      name: cartItem.product[0].name,
+      price: cartItem.product[0].price,
       quantity: cartItem.quantity,
       photo: {
         connect: {
-          id: cartItem.product.photo.id,
+          id: cartItem.product[0].photo[0].id,
         },
       },
     };
@@ -86,11 +88,20 @@ const checkout = async (
 
   const cartItemsIds = cartItems.map((cartItem) => cartItem.id);
   // delete cart items
-  await context.query.Cart.deleteMany({
-    where: {
-      ids: cartItemsIds,
-    },
-  });
+  //   cartItemsIds.forEach(async (cartItemId) => {
+  //     await context.query.CartItem.deleteOne({
+  //         where: { id: cartItemId },
+  //         });
+  //     }
+  //     );
+  // await context.query.CartItem.deleteMany({
+  //       where: {
+  //     id: {
+  //         in: cartItemsIds
+  //     }
+  // }
+  // });
+
   return order;
 };
 

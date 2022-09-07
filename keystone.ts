@@ -15,6 +15,7 @@ import {
   Role,
 } from "./schemas";
 import { extendGraphqlSchema } from "./mutations";
+import { extendExpressApp } from "./api/extendExpressApp";
 
 const { withAuth } = createAuth({
   listKey: "User",
@@ -46,6 +47,7 @@ export default withAuth(
       port: parseInt(process.env.PORT!) || 3000,
       maxFileSize: 200 * 1024 * 1024,
       healthCheck: true,
+      extendExpressApp: extendExpressApp,
     },
     db: {
       provider: "postgresql",
@@ -81,6 +83,7 @@ export default withAuth(
       Role,
     },
     extendGraphqlSchema: extendGraphqlSchema,
+
     session,
   })
 );
