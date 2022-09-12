@@ -545,7 +545,7 @@ input RoleRelateToOneForCreateInput {
 
 type Order {
   id: ID!
-  label: String
+  label: ID
   total: Int
   user: User
   items(
@@ -555,7 +555,9 @@ type Order {
     skip: Int! = 0
   ): [OrderItem!]
   itemsCount(where: OrderItemWhereInput! = {}): Int
+  orderDate: DateTime
   charge: String
+  status: String
 }
 
 input OrderWhereUniqueInput {
@@ -570,7 +572,9 @@ input OrderWhereInput {
   total: IntNullableFilter
   user: UserWhereInput
   items: OrderItemManyRelationFilter
+  orderDate: DateTimeNullableFilter
   charge: StringFilter
+  status: StringNullableFilter
 }
 
 input IntNullableFilter {
@@ -593,14 +597,18 @@ input OrderItemManyRelationFilter {
 input OrderOrderByInput {
   id: OrderDirection
   total: OrderDirection
+  orderDate: OrderDirection
   charge: OrderDirection
+  status: OrderDirection
 }
 
 input OrderUpdateInput {
   total: Int
   user: UserRelateToOneForUpdateInput
   items: OrderItemRelateToManyForUpdateInput
+  orderDate: DateTime
   charge: String
+  status: String
 }
 
 input OrderItemRelateToManyForUpdateInput {
@@ -619,7 +627,9 @@ input OrderCreateInput {
   total: Int
   user: UserRelateToOneForCreateInput
   items: OrderItemRelateToManyForCreateInput
+  orderDate: DateTime
   charge: String
+  status: String
 }
 
 input OrderItemRelateToManyForCreateInput {

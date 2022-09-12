@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { KeystoneContext } from "@keystone-6/core/types";
-import stripe from "../lib/stripe";
 
 const graphql = String.raw;
 
@@ -51,18 +50,6 @@ const checkout = async (
     return acc + cartItem.product[0].price * cartItem.quantity;
   }, 0);
 
-  const charge = await stripe.paymentIntents
-    .create({
-      amount: total,
-      currency: "usd",
-      automatic_payment_methods: {
-        enabled: true,
-      },
-    })
-    .catch((err) => {
-      throw new Error("Error processing payment");
-    });
-
   const orderItems = cartItems.map((cartItem) => {
     const orderItem = {
       name: cartItem.product[0].name,
@@ -81,26 +68,18 @@ const checkout = async (
     data: {
       user: { connect: { id: user.id } },
       items: { create: orderItems },
-      total: charge.amount,
-      charge: charge.id,
+      total,
+      charge: token,
     },
   });
 
   const cartItemsIds = cartItems.map((cartItem) => cartItem.id);
   // delete cart items
-  //   cartItemsIds.forEach(async (cartItemId) => {
-  //     await context.query.CartItem.deleteOne({
-  //         where: { id: cartItemId },
-  //         });
-  //     }
-  //     );
-  // await context.query.CartItem.deleteMany({
-  //       where: {
-  //     id: {
-  //         in: cartItemsIds
-  //     }
-  // }
-  // });
+  cartItemsIds.forEach(async (cartItemId) => {
+    await context.query.Cart.deleteOne({
+      where: { id: cartItemId },
+    });
+  });
 
   return order;
 };

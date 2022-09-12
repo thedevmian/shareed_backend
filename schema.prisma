@@ -53,12 +53,14 @@ model User {
 }
 
 model Order {
-  id     String      @id @default(cuid())
-  total  Int?
-  user   User?       @relation("Order_user", fields: [userId], references: [id])
-  userId String?     @map("user")
-  items  OrderItem[] @relation("Order_items")
-  charge String      @default("")
+  id        String      @id @default(cuid())
+  total     Int?
+  user      User?       @relation("Order_user", fields: [userId], references: [id])
+  userId    String?     @map("user")
+  items     OrderItem[] @relation("Order_items")
+  orderDate DateTime?   @default(now())
+  charge    String      @default("")
+  status    String?     @default("PAYMENT_INCOMPLETE")
 
   @@index([userId])
 }
