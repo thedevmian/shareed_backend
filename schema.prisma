@@ -85,14 +85,13 @@ model Role {
   id                String    @id @default(cuid())
   name              String    @default("")
   assignedTo        User[]    @relation("User_role")
-  createdAt         DateTime?
+  createdAt         DateTime? @default(now())
   updatedAt         DateTime? @updatedAt
   isAdmin           Boolean   @default(false)
   canManageProducts Boolean   @default(false)
-  canManageOrders   Boolean   @default(false)
+  canSeeOtherUsers  Boolean   @default(false)
   canManageUsers    Boolean   @default(false)
-  canManageCarts    Boolean   @default(false)
-  canManageImages   Boolean   @default(false)
   canManageRoles    Boolean   @default(false)
-  canSeeOthersUsers Boolean   @default(false)
+  canManageCart     Boolean   @default(false)
+  canManageOrders   Boolean   @default(false)
 }

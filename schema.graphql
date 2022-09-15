@@ -789,12 +789,11 @@ type Role {
   updatedAt: DateTime
   isAdmin: Boolean
   canManageProducts: Boolean
-  canManageOrders: Boolean
+  canSeeOtherUsers: Boolean
   canManageUsers: Boolean
-  canManageCarts: Boolean
-  canManageImages: Boolean
   canManageRoles: Boolean
-  canSeeOthersUsers: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
 }
 
 input RoleWhereUniqueInput {
@@ -812,12 +811,11 @@ input RoleWhereInput {
   updatedAt: DateTimeNullableFilter
   isAdmin: BooleanFilter
   canManageProducts: BooleanFilter
-  canManageOrders: BooleanFilter
+  canSeeOtherUsers: BooleanFilter
   canManageUsers: BooleanFilter
-  canManageCarts: BooleanFilter
-  canManageImages: BooleanFilter
   canManageRoles: BooleanFilter
-  canSeeOthersUsers: BooleanFilter
+  canManageCart: BooleanFilter
+  canManageOrders: BooleanFilter
 }
 
 input BooleanFilter {
@@ -832,12 +830,11 @@ input RoleOrderByInput {
   updatedAt: OrderDirection
   isAdmin: OrderDirection
   canManageProducts: OrderDirection
-  canManageOrders: OrderDirection
+  canSeeOtherUsers: OrderDirection
   canManageUsers: OrderDirection
-  canManageCarts: OrderDirection
-  canManageImages: OrderDirection
   canManageRoles: OrderDirection
-  canSeeOthersUsers: OrderDirection
+  canManageCart: OrderDirection
+  canManageOrders: OrderDirection
 }
 
 input RoleUpdateInput {
@@ -847,12 +844,11 @@ input RoleUpdateInput {
   updatedAt: DateTime
   isAdmin: Boolean
   canManageProducts: Boolean
-  canManageOrders: Boolean
+  canSeeOtherUsers: Boolean
   canManageUsers: Boolean
-  canManageCarts: Boolean
-  canManageImages: Boolean
   canManageRoles: Boolean
-  canSeeOthersUsers: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
 }
 
 input RoleUpdateArgs {
@@ -867,12 +863,11 @@ input RoleCreateInput {
   updatedAt: DateTime
   isAdmin: Boolean
   canManageProducts: Boolean
-  canManageOrders: Boolean
+  canSeeOtherUsers: Boolean
   canManageUsers: Boolean
-  canManageCarts: Boolean
-  canManageImages: Boolean
   canManageRoles: Boolean
-  canSeeOthersUsers: Boolean
+  canManageCart: Boolean
+  canManageOrders: Boolean
 }
 
 """

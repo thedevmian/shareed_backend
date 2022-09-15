@@ -1,41 +1,55 @@
-import { list } from '@keystone-6/core';
+import { list } from "@keystone-6/core";
 import {
-  integer, relationship, select, text, timestamp,
-} from '@keystone-6/core/fields';
+  integer,
+  relationship,
+  select,
+  text,
+  timestamp,
+} from "@keystone-6/core/fields";
 
 export const Product = list({
   fields: {
     name: text({ validation: { isRequired: true } }),
-    description: text({ validation: { isRequired: true }, ui: { displayMode: 'textarea' } }),
+    description: text({
+      validation: { isRequired: true },
+      ui: { displayMode: "textarea" },
+    }),
     price: integer({ validation: { isRequired: true, min: 0 } }),
-    photo: relationship({ ref: 'ProductImage.product', many: true }),
+    photo: relationship({ ref: "ProductImage.product", many: true }),
     select: select({
       options: [
-        { label: 'UNAVAILABLE', value: 'unavailable' },
-        { label: 'AVAILABLE', value: 'available' },
-        { label: 'SOLD OUT', value: 'soldout' },
-        { label: 'DRAFT', value: 'draft' },
+        { label: "UNAVAILABLE", value: "unavailable" },
+        { label: "AVAILABLE", value: "available" },
+        { label: "SOLD OUT", value: "soldout" },
+        { label: "DRAFT", value: "draft" },
       ],
-      defaultValue: 'published',
+      defaultValue: "published",
       ui: {
-        displayMode: 'segmented-control',
+        displayMode: "segmented-control",
       },
     }),
     collections: select({
       options: [
-        { label: 'New', value: 'new' },
-        { label: 'Men', value: 'men' },
-        { label: 'Women', value: 'women' },
+        { label: "New", value: "new" },
+        { label: "Men", value: "men" },
+        { label: "Women", value: "women" },
       ],
-      defaultValue: 'new',
+      defaultValue: "new",
       ui: {
-        displayMode: 'segmented-control',
+        displayMode: "segmented-control",
       },
     }),
     publishDate: timestamp(),
     author: relationship({
-      ref: 'User.products',
+      ref: "User.products",
+      hooks: {
+        resolveInput: ({ context }) => {
+          if (!context.session.itemId) {
+            throw new Error("You must be logged in to create a product");
+          }
+          return { connect: { id: context.session.itemId } };
+        },
+      },
     }),
   },
 });
-

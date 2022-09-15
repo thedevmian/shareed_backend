@@ -3,7 +3,6 @@ import { config } from "@keystone-6/core";
 import { BaseKeystoneTypeInfo, KeystoneContext } from "@keystone-6/core/types";
 import { createAuth } from "@keystone-6/auth";
 import { statelessSessions } from "@keystone-6/core/session";
-
 import sendPasswordResetEmail from "./lib/mail";
 import {
   Cart,
@@ -16,12 +15,13 @@ import {
 } from "./schemas";
 import { extendGraphqlSchema } from "./mutations";
 import { extendExpressApp } from "./api/extendExpressApp";
+import { permissionsList } from "./schemas/fields";
 
 const { withAuth } = createAuth({
   listKey: "User",
   identityField: "email",
   secretField: "password",
-  sessionData: "id name email role { isAdmin }",
+  sessionData: `id name email role { isAdmin ${permissionsList.join(" ")} }`,
   passwordResetLink: {
     sendToken: ({ identity, token }) => {
       sendPasswordResetEmail(identity, token);

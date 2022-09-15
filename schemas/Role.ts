@@ -1,19 +1,23 @@
-import { list } from '@keystone-6/core';
+import { list } from "@keystone-6/core";
 import {
-  relationship, text, timestamp, checkbox,
-} from '@keystone-6/core/fields';
+  relationship,
+  text,
+  timestamp,
+  checkbox,
+} from "@keystone-6/core/fields";
+import { permissionFields } from "./fields";
 
 export const Role = list({
   fields: {
     name: text({ validation: { isRequired: true } }),
     assignedTo: relationship({
-      ref: 'User.role',
+      ref: "User.role",
       many: true,
       ui: {
-        itemView: { fieldMode: 'read' },
+        itemView: { fieldMode: "read" },
       },
     }),
-    createdAt: timestamp(),
+    createdAt: timestamp({ defaultValue: { kind: "now" } }),
     updatedAt: timestamp({
       db: {
         updatedAt: true,
@@ -22,37 +26,10 @@ export const Role = list({
     isAdmin: checkbox({
       defaultValue: false,
       ui: {
-        itemView: { fieldMode: 'read' },
+        itemView: { fieldMode: "read" },
       },
     }),
-    canManageProducts: checkbox({
-      defaultValue: false,
-      label: 'Can a user update and delete products?',
-    }),
-    canManageOrders: checkbox({
-      defaultValue: false,
-      label: 'Can a user update and delete orders?',
-    }),
-    canManageUsers: checkbox({
-      defaultValue: false,
-      label: 'Can a user update and delete users?',
-    }),
-    canManageCarts: checkbox({
-      defaultValue: false,
-      label: 'Can a user update and delete carts?',
-    }),
-    canManageImages: checkbox({
-      defaultValue: false,
-      label: 'Can a user update and delete images?',
-    }),
-    canManageRoles: checkbox({
-      defaultValue: false,
-      label: 'Can a user update and delete roles?',
-    }),
-    canSeeOthersUsers: checkbox({
-      defaultValue: false,
-      label: 'Can a user see other users?',
-    }),
+    ...permissionFields,
   },
   access: {
     operation: {
@@ -63,4 +40,3 @@ export const Role = list({
     },
   },
 });
-
