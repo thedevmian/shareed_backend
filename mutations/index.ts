@@ -1,4 +1,4 @@
-import { graphql, graphQLSchemaExtension } from "@keystone-6/core";
+import { graphQLSchemaExtension } from "@keystone-6/core";
 import { Context } from ".keystone/types";
 import addProductToBag from "./addProductToBag";
 import checkout from "./checkout";

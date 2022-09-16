@@ -5,6 +5,7 @@ import {
   timestamp,
   checkbox,
 } from "@keystone-6/core/fields";
+import { permissions } from "../access";
 import { permissionFields } from "./fields";
 
 export const Role = list({
@@ -33,10 +34,15 @@ export const Role = list({
   },
   access: {
     operation: {
-      create: () => true,
-      update: () => true,
-      delete: () => true,
-      query: () => true,
+      create: permissions.canManageRoles,
+      update: permissions.canManageRoles,
+      delete: permissions.canManageRoles,
+      query: permissions.canManageRoles,
     },
+  },
+  ui: {
+    isHidden: (args) => !permissions.canManageRoles(args),
+    hideCreate: (args) => !permissions.canManageRoles(args),
+    hideDelete: (args) => !permissions.canManageRoles(args),
   },
 });

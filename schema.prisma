@@ -45,6 +45,9 @@ model User {
   cart                    Cart[]    @relation("Cart_user")
   role                    Role?     @relation("User_role", fields: [roleId], references: [id])
   roleId                  String?   @map("role")
+  isReadable              Boolean   @default(false)
+  isUpdatable             Boolean   @default(false)
+  isDeletable             Boolean   @default(false)
   passwordResetToken      String?
   passwordResetIssuedAt   DateTime?
   passwordResetRedeemedAt DateTime?

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/unbound-method */
 import {
   integer,
   relationship,
@@ -7,10 +9,22 @@ import {
   virtual,
 } from "@keystone-6/core/fields";
 import { graphql, list } from "@keystone-6/core";
+import { accessControl, rules } from "../access";
 
 export const Order = list({
-  // TODO add access control
-
+  access: {
+    operation: {
+      create: accessControl,
+      query: accessControl,
+      update: accessControl,
+      delete: accessControl,
+    },
+    filter: {
+      query: rules.canOrder,
+      update: rules.canOrder,
+      delete: rules.canOrder,
+    },
+  },
   fields: {
     label: virtual({
       field: graphql.field({

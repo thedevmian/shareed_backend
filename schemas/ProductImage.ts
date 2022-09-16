@@ -1,6 +1,7 @@
 import { list } from "@keystone-6/core";
 import { cloudinaryImage } from "@keystone-6/cloudinary";
 import { relationship, text } from "@keystone-6/core/fields";
+import { accessControl, permissions } from "../access";
 
 const cloudinary = {
   cloudName: process.env.CLOUDINARY_CLOUD_NAME!,
@@ -10,7 +11,14 @@ const cloudinary = {
 };
 
 export const ProductImage = list({
-  // TODO: add access control
+  access: {
+    operation: {
+      create: accessControl,
+      delete: permissions.canManageProducts,
+      update: permissions.canManageProducts,
+      query: () => true,
+    },
+  },
   fields: {
     image: cloudinaryImage({
       cloudinary,

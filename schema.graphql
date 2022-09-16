@@ -423,6 +423,9 @@ type User {
   ): [Cart!]
   cartCount(where: CartWhereInput! = {}): Int
   role: Role
+  isReadable: Boolean
+  isUpdatable: Boolean
+  isDeletable: Boolean
   passwordResetToken: PasswordState
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -448,6 +451,9 @@ input UserWhereInput {
   order: OrderManyRelationFilter
   cart: CartManyRelationFilter
   role: RoleWhereInput
+  isReadable: BooleanFilter
+  isUpdatable: BooleanFilter
+  isDeletable: BooleanFilter
   passwordResetToken: PasswordFilter
   passwordResetIssuedAt: DateTimeNullableFilter
   passwordResetRedeemedAt: DateTimeNullableFilter
@@ -465,6 +471,11 @@ input CartManyRelationFilter {
   none: CartWhereInput
 }
 
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
 input PasswordFilter {
   isSet: Boolean!
 }
@@ -473,6 +484,9 @@ input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  isReadable: OrderDirection
+  isUpdatable: OrderDirection
+  isDeletable: OrderDirection
   passwordResetIssuedAt: OrderDirection
   passwordResetRedeemedAt: OrderDirection
 }
@@ -485,6 +499,9 @@ input UserUpdateInput {
   order: OrderRelateToManyForUpdateInput
   cart: CartRelateToManyForUpdateInput
   role: RoleRelateToOneForUpdateInput
+  isReadable: Boolean
+  isUpdatable: Boolean
+  isDeletable: Boolean
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -523,6 +540,9 @@ input UserCreateInput {
   order: OrderRelateToManyForCreateInput
   cart: CartRelateToManyForCreateInput
   role: RoleRelateToOneForCreateInput
+  isReadable: Boolean
+  isUpdatable: Boolean
+  isDeletable: Boolean
   passwordResetToken: String
   passwordResetIssuedAt: DateTime
   passwordResetRedeemedAt: DateTime
@@ -816,11 +836,6 @@ input RoleWhereInput {
   canManageRoles: BooleanFilter
   canManageCart: BooleanFilter
   canManageOrders: BooleanFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input RoleOrderByInput {

@@ -1,8 +1,19 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { list } from "@keystone-6/core";
 import { integer, relationship, text } from "@keystone-6/core/fields";
+import { accessControl, rules } from "../access";
 
 export const OrderItem = list({
-  // TODO add access control
+  access: {
+    operation: {
+      create: accessControl,
+    },
+    filter: {
+      query: rules.canManageOrderItems,
+      update: rules.canManageOrderItems,
+      delete: rules.canManageOrderItems,
+    },
+  },
   fields: {
     name: text({
       validation: { isRequired: true },

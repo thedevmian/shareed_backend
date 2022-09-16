@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { KeystoneContext } from "@keystone-6/core/types";
@@ -21,7 +22,7 @@ const checkout = async (
     name
     email
     cart {
-        id
+      id
       quantity
       product {
         id
@@ -29,9 +30,9 @@ const checkout = async (
         price
         photo(take: 1) {
             id
-          image {
-            id
-            publicUrlTransformed
+            image {
+              id
+              publicUrlTransformed
           }
         }
       }

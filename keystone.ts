@@ -57,7 +57,7 @@ export default withAuth(
       onConnect: (db: KeystoneContext<BaseKeystoneTypeInfo>): Promise<void> => {
         const onDbConnectInfo = (): Promise<void> => {
           // console.log(`Connected to database:`, db);
-          // console.log("session:", session);
+          console.log("session:", session);
           return Promise.resolve();
         };
         return onDbConnectInfo();
@@ -67,7 +67,7 @@ export default withAuth(
     ui: {
       isAccessAllowed: (context: KeystoneContext<BaseKeystoneTypeInfo>) =>
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        !!context.session?.data?.role?.isAdmin,
+        !!context.session?.data,
       publicPages: ["/signin", "/no-access"],
     },
     graphql: {

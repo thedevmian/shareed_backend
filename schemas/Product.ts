@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import { list } from "@keystone-6/core";
 import {
   integer,
@@ -6,8 +7,17 @@ import {
   text,
   timestamp,
 } from "@keystone-6/core/fields";
+import { accessControl, permissions, rules } from "../access";
 
 export const Product = list({
+  access: {
+    operation: {
+      create: accessControl,
+      query: () => true,
+      update: permissions.canManageProducts,
+      delete: rules.canManageProducts,
+    },
+  },
   fields: {
     name: text({ validation: { isRequired: true } }),
     description: text({
