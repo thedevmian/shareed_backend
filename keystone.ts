@@ -56,8 +56,6 @@ export default withAuth(
         "postgres://postgres:postgres@localhost:5432/postgres",
       onConnect: (db: KeystoneContext<BaseKeystoneTypeInfo>): Promise<void> => {
         const onDbConnectInfo = (): Promise<void> => {
-          // console.log(`Connected to database:`, db);
-          console.log("session:", session);
           return Promise.resolve();
         };
         return onDbConnectInfo();
