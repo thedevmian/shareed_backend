@@ -1,52 +1,89 @@
-# Keystone Project Starter
+# Shareed - KeystoneJS Backend for Shareed E-Commerce
 
-Welcome to Keystone!
+## About
 
-Run
+Shareed is an e-commerce platform that allows users to buy and sell second-hand items. For the frontend is used Next.js and for the backend Keystone.js. The project is deployed free on Vercel and Heroku.
 
+## Built With
+
+- [Next.js](https://nextjs.org/) - React Framework used in KeystoneJS to build the frontend
+- [Keystone.js](https://keystonejs.com/) - KeystoneJS is a flexible and powerful headless CMS and web application framework built on Node.js and GraphQL.
+- [Typescript](https://www.typescriptlang.org/) - For type safety
+- [PostgreSQL](https://www.postgresql.org/) (on ElephantSQL)
+- [Prisma](https://www.prisma.io/) (PostgreSQL)
+- [Mailjet](https://www.mailjet.com/) (for sending emails)
+- [Cloudinary](https://cloudinary.com/) (for image uploads)
+- [Stripe](https://stripe.com/) (for payments)
+- [Heroku](https://www.heroku.com/) (for hosting the backend)
+
+## Live Demo
+
+The backend is deployed right now on the Heroku free tier. Live demo: [https://shareed-backend.herokuapp.com/](https://shareed-backend.herokuapp.com/signin).
+
+Demo credentials:
+
+```sh
+email: testmail@gmail.com
+password: password1
 ```
+
+The Heroku backend is connected to a PostgreSQL database on [ElephantSQL](https://www.elephantsql.com/).
+
+## Screenshots
+
+Admin Homepage
+![](https://res.cloudinary.com/dkxixe3yr/image/upload/v1663843287/shareed/gif/SCR-20220922-hlg_mmeies.png)
+
+### CORS issue
+
+The biggest problem I've encountered was the CORS issue. The frontend sends requests to the backend and KeystoneJS backend send session cookies. The problem is that the frontend is deployed on Vercel and the backend runs on Heroku. The Heroku app is on a different domain than the Vercel app.
+
+The solution with proxy [CORS Anywhere]() is not working for me because the proxy is not sending the session cookies. The solution was to use [cors](https://www.npmjs.com/package/cors) package on the backend and to set the `credentials` option to `true`, and `origin` to `true`. But also session cookies must be set to `sameSite: 'none'` and `secure: true`. This way the cookies are sent to the frontend and the session is maintained.
+
+`Secure:` must be set to `true` when the `sameSite` is set to `none`. This way the browser will not send the cookies to the frontend if the frontend is not on HTTPS. You can read more about this [here](https://web.dev/samesite-cookies-explained/).
+
+```js
+const sessionConfig = {
+  maxAge: 60 * 60 * 24 * 360, // How long should they stay signed in?
+  secret: process.env.COOKIE_SECRET,
+  sameSite: "none",
+  secure: true,
+};
+```
+
+## Getting Started
+
+To get a local copy up and running follow these simple example steps.
+
+1.  Clone the repo
+
+```sh
+git clone https://github.com/thedevmian/shareed_backend.git
+```
+
+2.  Install NPM packages
+
+```sh
+yarn install
+```
+
+3.  Create a `.env` file in the root directory and add the following environment variables:
+
+```sh
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+CLOUDINARY_API_FOLDER=
+DATABASE_URL=
+FRONTEND_URL=
+MAILJET_API_KEY=
+MAILJET_API_SECRET=
+STRIPE_SECRET_KEY=
+COOKIE_SECRET=
+```
+
+4.  Run the app
+
+```sh
 yarn dev
 ```
-
-To view the config for your new app, look at [./keystone.ts](./keystone.ts)
-
-This project starter is designed to give you a sense of the power Keystone can offer you, and show off some of its main features. It's also a pretty simple setup if you want to build out from it.
-
-We recommend you use this alongside our [getting started walkthrough](https://keystonejs.com/docs/walkthroughs/getting-started-with-create-keystone-app) which will walk you through what you get as part of this starter.
-
-If you want an overview of all the features Keystone offers, check out our [features](https://keystonejs.com/why-keystone#features) page.
-
-## Some Quick Notes On Getting Started
-
-### Changing the database
-
-We've set you up with an [SQLite database](https://keystonejs.com/docs/apis/config#sqlite) for ease-of-use. If you're wanting to use PostgreSQL, you can!
-
-Just change the `db` property on line 16 of the Keystone file [./keystone.ts](./keystone.ts) to
-
-```typescript
-db: {
-    provider: 'postgresql',
-    url: process.env.DATABASE_URL || 'DATABASE_URL_TO_REPLACE',
-}
-```
-
-And provide your database url from PostgreSQL.
-
-For more on database configuration, check out or [DB API Docs](https://keystonejs.com/docs/apis/config#db)
-
-### Auth
-
-We've put auth into its own file to make this humble starter easier to navigate. To explore it without auth turned on, comment out the `isAccessAllowed` on line 21 of the Keystone file [./keystone.ts](./keystone.ts).
-
-For more on auth, check out our [Authentication API Docs](https://keystonejs.com/docs/apis/auth#authentication-api)
-
-### Adding a frontend
-
-As a Headless CMS, Keystone can be used with any frontend that uses GraphQL. It provides a GraphQL endpoint you can write queries against at `/api/graphql` (by default [http://localhost:3000/api/graphql](http://localhost:3000/api/graphql)). At Thinkmill, we tend to use [Next.js](https://nextjs.org/) and [Apollo GraphQL](https://www.apollographql.com/docs/react/get-started/) as our frontend and way to write queries, but if you have your own favourite, feel free to use it.
-
-A walkthrough on how to do this is forthcoming, but in the meantime our [todo example](https://github.com/keystonejs/keystone-react-todo-demo) shows a Keystone set up with a frontend. For a more full example, you can also look at an example app we built for [Prisma Day 2021](https://github.com/keystonejs/prisma-day-2021-workshop)
-
-### Embedding Keystone in a Next.js frontend
-
-While Keystone works as a standalone app, you can embed your Keystone app into a [Next.js](https://nextjs.org/) app. This is quite a different setup to the starter, and we recommend checking out our walkthrough for that [here](https://keystonejs.com/docs/walkthroughs/embedded-mode-with-sqlite-nextjs#how-to-embed-keystone-sq-lite-in-a-next-js-app).
