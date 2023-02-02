@@ -14,11 +14,11 @@ Shareed is an e-commerce platform that allows users to buy and sell second-hand 
 - [Mailjet](https://www.mailjet.com/) (for sending emails)
 - [Cloudinary](https://cloudinary.com/) (for image uploads)
 - [Stripe](https://stripe.com/) (for payments)
-- [Heroku](https://www.heroku.com/) (for hosting the backend)
+- [Render](https://shareed-backedn.onrender.com/) (for hosting the backend)
 
 ## Live Demo
 
-The backend is deployed right now on the Heroku free tier. Live demo: [https://shareed-backend.herokuapp.com/](https://shareed-backend.herokuapp.com/signin).
+The backend is deployed right now on the Heroku free tier. Live demo: [https://shareed-backedn.onrender.com/](https://shareed-backedn.onrender.com/).
 
 Demo credentials:
 
